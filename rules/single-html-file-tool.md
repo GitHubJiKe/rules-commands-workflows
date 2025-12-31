@@ -10,7 +10,7 @@ Process:
 
 Constraint:
 - **三不原则**：不跨文件（HTML/CSS/JS 必须合一）、不使用大型框架（No React/Vue）、不添加构建步骤。
-- **本地优先**：禁止数据上传服务器，敏感信息仅存储于 `localStorage` 或 URL 参数。
+- **本地优先**：禁止数据上传服务器，敏感信息仅存储于 `localStorage`、`IndexedDB` 或 URL 参数。
 - **极致便携**：代码规模原则控制在 100-500 行，依赖必须使用带版本号的公共 CDN（如 cdnjs, jsdelivr）。
 - **交互规范**：必须包含一键复制结果、文件拖拽/选择、URL 状态持久化（Deep Linking）等体验优化。
 
