@@ -9,6 +9,7 @@ class FormManager {
         this.dbVersion = 1;
         this.db = null;
         this.currentSchema = null;
+        this.allSubmissions = []; // 缓存所有数据以便过滤
         this.init();
     }
 
@@ -79,8 +80,9 @@ class FormManager {
             const request = store.getAll();
 
             request.onsuccess = () => {
-                this.renderDataTable(request.result);
-                resolve(request.result);
+                this.allSubmissions = request.result;
+                this.renderDataTable(this.allSubmissions);
+                resolve(this.allSubmissions);
             };
         });
     }
@@ -277,6 +279,38 @@ class FormManager {
                             JSON.stringify(example, null, 4);
                     });
             });
+
+        // Data Filtering
+        const filterInput = document.getElementById("data-filter-input");
+        if (filterInput) {
+            filterInput.addEventListener("input", (e) => {
+                this.handleFilter(e.target.value);
+            });
+        }
+    }
+
+    handleFilter(query) {
+        if (!query) {
+            this.renderDataTable(this.allSubmissions);
+            return;
+        }
+
+        const searchTerm = query.toLowerCase();
+        const filtered = this.allSubmissions.filter((s) => {
+            // 在 ID、提交时间、表单类型以及所有数据字段中搜索
+            const searchableText = [
+                s.id.toString(),
+                new Date(s.timestamp).toLocaleString(),
+                s.schemaTitle,
+                ...Object.values(s.data),
+            ]
+                .join("|")
+                .toLowerCase();
+
+            return searchableText.includes(searchTerm);
+        });
+
+        this.renderDataTable(filtered);
     }
 
     switchTab(tabId) {

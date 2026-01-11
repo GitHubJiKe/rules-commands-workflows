@@ -1,88 +1,120 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>智能表单生成器 - 本地优先</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="app-container">
-        <header>
-            <h1>智能表单生成器</h1>
-            <p class="subtitle">基于 JSON Schema 的本地优先表单系统</p>
-        </header>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>智能表单生成器 - 本地优先</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div class="app-container">
+            <header>
+                <h1>智能表单生成器</h1>
+                <p class="subtitle">基于 JSON Schema 的本地优先表单系统</p>
+            </header>
 
-        <nav class="tabs">
-            <button class="tab-btn active" data-tab="schema-view">配置 Schema</button>
-            <button class="tab-btn" data-tab="form-view">查看表单</button>
-            <button class="tab-btn" data-tab="data-view">数据管理</button>
-        </nav>
+            <nav class="tabs">
+                <button class="tab-btn active" data-tab="schema-view">
+                    配置 Schema
+                </button>
+                <button class="tab-btn" data-tab="form-view">查看表单</button>
+                <button class="tab-btn" data-tab="data-view">数据管理</button>
+            </nav>
 
-        <main class="content-area">
-            <!-- Schema View -->
-            <section id="schema-view" class="tab-content active">
-                <div class="card">
-                    <h2>加载表单配置</h2>
-                    <p class="description">粘贴您的 <code>form.json</code> 内容到下方，或点击加载示例。</p>
-                    <textarea id="schema-input" placeholder="在此粘贴 JSON 配置..."></textarea>
-                    <div class="actions">
-                        <button id="load-example-btn" class="secondary-btn">加载示例</button>
-                        <button id="generate-form-btn" class="primary-btn">生成表单</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Form View -->
-            <section id="form-view" class="tab-content">
-                <div class="card">
-                    <h2 id="dynamic-form-title">表单预览</h2>
-                    <form id="dynamic-form">
-                        <div id="form-fields-container">
-                            <p class="empty-msg">请先在“配置 Schema”中生成表单。</p>
-                        </div>
-                        <div class="form-actions" style="display: none;">
-                            <button type="submit" class="primary-btn">提交数据</button>
-                            <button type="reset" class="secondary-btn">重置</button>
-                        </div>
-                    </form>
-                </div>
-            </section>
-
-            <!-- Data View -->
-            <section id="data-view" class="tab-content">
-                <div class="card">
-                    <div class="card-header">
-                        <h2>数据列表</h2>
-                        <div class="export-actions">
-                            <button id="export-csv-btn" class="secondary-btn">导出 CSV</button>
-                            <button id="clear-data-btn" class="danger-btn">清空所有</button>
+            <main class="content-area">
+                <!-- Schema View -->
+                <section id="schema-view" class="tab-content active">
+                    <div class="card">
+                        <h2>加载表单配置</h2>
+                        <p class="description">
+                            粘贴您的
+                            <code>form.json</code> 内容到下方，或点击加载示例。
+                        </p>
+                        <textarea
+                            id="schema-input"
+                            placeholder="在此粘贴 JSON 配置..."
+                        ></textarea>
+                        <div class="actions">
+                            <button id="load-example-btn" class="secondary-btn">
+                                加载示例
+                            </button>
+                            <button id="generate-form-btn" class="primary-btn">
+                                生成表单
+                            </button>
                         </div>
                     </div>
-                    <div class="table-container">
-                        <table id="data-table">
-                            <thead>
-                                <tr id="table-head">
-                                    <th>暂无数据</th>
-                                </tr>
-                            </thead>
-                            <tbody id="table-body">
-                                <!-- Data rows will be injected here -->
-                            </tbody>
-                        </table>
+                </section>
+
+                <!-- Form View -->
+                <section id="form-view" class="tab-content">
+                    <div class="card">
+                        <h2 id="dynamic-form-title">表单预览</h2>
+                        <form id="dynamic-form">
+                            <div id="form-fields-container">
+                                <p class="empty-msg">
+                                    请先在“配置 Schema”中生成表单。
+                                </p>
+                            </div>
+                            <div class="form-actions" style="display: none">
+                                <button type="submit" class="primary-btn">
+                                    提交数据
+                                </button>
+                                <button type="reset" class="secondary-btn">
+                                    重置
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                </div>
-            </section>
-        </main>
+                </section>
 
-        <footer>
-            <p>&copy; 2026 本地优先表单系统 - 遵循原生态开发准则</p>
-        </footer>
-    </div>
+                <!-- Data View -->
+                <section id="data-view" class="tab-content">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>数据列表</h2>
+                            <div class="filter-container">
+                                <input
+                                    type="text"
+                                    id="data-filter-input"
+                                    placeholder="筛选数据 (模糊匹配)..."
+                                />
+                            </div>
+                            <div class="export-actions">
+                                <button
+                                    id="export-csv-btn"
+                                    class="secondary-btn"
+                                >
+                                    导出 CSV
+                                </button>
+                                <button id="clear-data-btn" class="danger-btn">
+                                    清空所有
+                                </button>
+                            </div>
+                        </div>
+                        <div class="table-container">
+                            <table id="data-table">
+                                <thead>
+                                    <tr id="table-head">
+                                        <th>暂无数据</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-body">
+                                    <!-- Data rows will be injected here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </main>
 
-    <!-- Notification Toast -->
-    <div id="toast" class="toast"></div>
+            <footer>
+                <p>&copy; 2026 本地优先表单系统 - 遵循原生态开发准则</p>
+            </footer>
+        </div>
 
-    <script src="app.js"></script>
-</body>
+        <!-- Notification Toast -->
+        <div id="toast" class="toast"></div>
+
+        <script src="app.js"></script>
+    </body>
 </html>
